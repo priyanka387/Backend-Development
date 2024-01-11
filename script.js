@@ -1,11 +1,23 @@
-// var a = 12;
-// var b = 123456;
-// var c = 45;
+const express = require('express')
+const app = express()
 
-// module.exports = {first:a, second:b};
-// console.log("hello");
+app.set("view engine", "ejs")
+app.use(express.static("./public"))
 
-var a = 12;
-// console.log(a);
+app.get('/', function (req, res) {
+  res.render('index', {age:12})
+})
 
-module.exports = a;
+app.get('/profile/:username', function (req, res) {
+    res.render(`hell ${username}`)
+  })
+
+app.use(function errorHandler (err, req, res, next) {
+    if (res.headersSent) {
+      return next(err)
+    }
+    res.status(500)
+    res.render('error', { error: err })
+  })
+
+app.listen(3000)
